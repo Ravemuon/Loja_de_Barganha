@@ -11,13 +11,15 @@ return new class extends Migration
      */
     public function up()
     {
+        // Se a tabela não existe, usamos CREATE
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('nome'); // Ex: Rock, Terror, MPB
+            $table->string('nome')->unique();
+            $table->string('icone')->default('bi-tag'); 
+            $table->enum('tipo_midia', ['Música', 'Jogo', 'Filme', 'Outro'])->default('Outro');
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */

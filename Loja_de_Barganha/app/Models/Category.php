@@ -9,7 +9,7 @@ class Category extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nome'];
+    protected $fillable = ['nome', 'icone', 'tipo_midia'];
 
     // Relacionamento: Uma categoria tem muitos itens
     public function items()

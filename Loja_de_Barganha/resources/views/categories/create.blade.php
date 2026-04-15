@@ -18,24 +18,53 @@
                     <form action="{{ route('categories.store') }}" method="POST">
                         @csrf
 
+                        {{-- Nome da Categoria --}}
                         <div class="mb-4">
                             <label class="form-label text-white fw-bold text-uppercase" style="letter-spacing: 1px;">
                                 Nome da Categoria
                             </label>
-                            {{-- Input preto com foco estilizado --}}
                             <input type="text" name="nome" 
                                    class="form-control form-control-lg bg-black border-secondary text-white rounded-0 @error('nome') border-danger @enderror" 
                                    placeholder="Ex: Vinil Hardcore, VHS Horror..." 
                                    value="{{ old('nome') }}" 
-                                   style="box-shadow: none;"
                                    required>
-                            
                             @error('nome')
                                 <div class="text-danger fw-bold mt-2 small text-uppercase">
                                     <i class="bi bi-exclamation-octagon-fill me-1"></i> {{ $message }}
                                 </div>
                             @enderror
-                            <div class="form-text text-dim mt-2 italic">Dica: Use nomes que definam bem o gênero ou tipo de mídia.</div>
+                        </div>
+
+                        {{-- Tipo de Mídia --}}
+                        <div class="mb-4">
+                            <label class="form-label text-white fw-bold text-uppercase" style="letter-spacing: 1px;">
+                                Tipo de Mídia Principal
+                            </label>
+                            <select name="tipo_midia" class="form-select form-select-lg bg-black border-secondary text-white rounded-0 @error('tipo_midia') border-danger @enderror" required>
+                                <option value="" selected disabled>Selecione o tipo...</option>
+                                <option value="Música" {{ old('tipo_midia') == 'Música' ? 'selected' : '' }}>Música (Vinil, CD, K7)</option>
+                                <option value="Jogo" {{ old('tipo_midia') == 'Jogo' ? 'selected' : '' }}>Jogos (Retro, Consoles)</option>
+                                <option value="Filme" {{ old('tipo_midia') == 'Filme' ? 'selected' : '' }}>Cinema (VHS, DVD, Blu-ray)</option>
+                                <option value="Outro" {{ old('tipo_midia') == 'Outro' ? 'selected' : '' }}>Outros Artefatos</option>
+                            </select>
+                        </div>
+
+                        {{-- Ícone do Bootstrap --}}
+                        <div class="mb-4">
+                            <label class="form-label text-white fw-bold text-uppercase" style="letter-spacing: 1px;">
+                                Ícone (Bootstrap Icons)
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-black border-secondary text-warning rounded-0"><i class="bi bi-search"></i></span>
+                                <input type="text" name="icone" 
+                                       class="form-control form-control-lg bg-black border-secondary text-white rounded-0 @error('icone') border-danger @enderror" 
+                                       placeholder="Ex: bi-vinyl-fill" 
+                                       value="{{ old('icone', 'bi-tag') }}" 
+                                       required>
+                            </div>
+                            <div class="form-text text-dim mt-2">
+                                Escolha um nome em <a href="https://icons.getbootstrap.com/" target="_blank" class="text-warning text-decoration-none fw-bold">icons.getbootstrap.com <i class="bi bi-box-arrow-up-right small"></i></a>
+                            </div>
                         </div>
 
                         <div class="d-flex justify-content-between align-items-center mt-5">
@@ -43,7 +72,6 @@
                                 <i class="bi bi-chevron-left me-1"></i> Voltar
                             </a>
                             
-                            {{-- Botão Punk Amarelo --}}
                             <button type="submit" class="btn btn-punk px-5 py-2 shadow border-0">
                                 CRIAR AGORA
                             </button>
@@ -63,8 +91,8 @@
 </div>
 
 <style>
-    /* Consistência de foco nos inputs */
-    .form-control:focus {
+    /* Consistência de foco nos inputs e selects */
+    .form-control:focus, .form-select:focus {
         background-color: #000 !important;
         border-color: var(--punk-yellow) !important;
         color: #fff !important;
@@ -77,6 +105,10 @@
         transition: 0.3s;
     }
     
-    .italic { font-style: italic; }
+    /* Estilizando o select para combinar com o fundo preto */
+    select option {
+        background: #000;
+        color: #fff;
+    }
 </style>
 @endsection
